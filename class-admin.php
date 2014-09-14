@@ -108,20 +108,19 @@ $domain = str_replace('www.', '', $domain);
 		<form method="post" action="options.php" id="options">
 			<?php settings_fields('fbcomments_options'); ?>
 			<?php $options = get_option('fbcomments'); 
-if (!isset($options['fbml'])) {$options['fbml'] = "";}
-if (!isset($options['fbns'])) {$options['fbns'] = "";}
-if (!isset($options['opengraph'])) {$options['opengraph'] = "";}
-if (!isset($options['html5'])) {$options['html5'] = "";}
-if (!isset($options['linklove'])) {$options['linklove'] = "";}
-if (!isset($options['posts'])) {$options['posts'] = "";}
-if (!isset($options['pages'])) {$options['pages'] = "";}
-if (!isset($options['homepage'])) {$options['homepage'] = "";}
-if (!isset($options['count'])) {$options['count'] = "";}
-if (!isset($options['jquery'])) {$options['jquery'] = "";}
-?>
-
-<?php if ($options['appID']=="") { ?>
-<div class="error">
+				if (!isset($options['fbml'])) {$options['fbml'] = "";}
+				if (!isset($options['fbns'])) {$options['fbns'] = "";}
+				if (!isset($options['opengraph'])) {$options['opengraph'] = "";}
+				if (!isset($options['html5'])) {$options['html5'] = "";}
+				if (!isset($options['linklove'])) {$options['linklove'] = "";}
+				if (!isset($options['posts'])) {$options['posts'] = "";}
+				if (!isset($options['pages'])) {$options['pages'] = "";}
+				if (!isset($options['homepage'])) {$options['homepage'] = "";}
+				if (!isset($options['count'])) {$options['count'] = "";}
+				if (!isset($options['jquery'])) {$options['jquery'] = "";}
+			?>
+			<?php if ($options['appID']=="") { ?>
+			<div class="error">
 			<h3 class="title">You Need to Set Up your Facebook App ID!</h3>
 			<table class="form-table">
 				<tr valign="top"><th scope="row"><a href="https://developers.facebook.com/apps" style="text-decoration:none" target="_blank">Create an App to handle your comments</a></th>
