@@ -178,11 +178,11 @@ $domain = str_replace('www.', '', $domain);
 
 			<h3 class="title">Display Settings</h3>
 			<table class="form-table">
-				<tr valign="top"><th scope="row"><label for="posts">Posts</label></th>
-					<td><input id="posts" name="fbcomments[posts]" type="checkbox" value="on" <?php checked('on', $options['posts']); ?> /></td>
+				<tr valign="top"><th scope="row"><label for="posts">Singular Posts</label></th>
+					<td><input id="posts" name="fbcomments[posts]" type="checkbox" value="on" <?php checked('on', $options['posts']); ?> /> <small>This includes all posts, custom post types and attacments. Note that you can disable comments by post using the Facebook Comments META box whilst editing.</small></td>
 				</tr>
 				<tr valign="top"><th scope="row"><label for="pages">Pages</label></th>
-					<td><input id="pages" name="fbcomments[pages]" type="checkbox" value="on" <?php checked('on', $options['pages']); ?> /></td>
+					<td><input id="pages" name="fbcomments[pages]" type="checkbox" value="on" <?php checked('on', $options['pages']); ?> /> <small>Note that you can disable comments by page using the Facebook Comments META box whilst editing.</small></td>
 				</tr>
 				<tr valign="top"><th scope="row"><label for="homepage">Homepage</label></th>
 					<td><input id="home" name="fbcomments[homepage]" type="checkbox" value="on" <?php checked('on', $options['homepage']); ?> /></td>
@@ -412,6 +412,86 @@ $domain = str_replace('www.', '', $domain);
 
 
 
+<?php
+}
+
+function fbc_add_custom_box() {
+    $post_types = get_post_types( '', 'names' );
+    $options = get_option('fbcomments');
+    foreach ( $post_types as $post_type ) {
+        if ( "post" == $post_type ) {
+        	if ($options['posts']=='on') {
+	            add_meta_box(
+	                'fbc_sectionid',
+	                __( 'Facebook Comments', 'fbc_singlemeta' ),
+	                'fbc_metabox',
+	                $post_type,
+	                'advanced',
+	                'core'
+	                );
+	        }
+        } elseif ( "page" == $post_type) {
+        	if ($options['pages']=='on') {
+	            add_meta_box(
+	                'fbc_sectionid',
+	                __( 'Facebook Comments', 'fbc_singlemeta' ),
+	                'fbc_metabox',
+	                $post_type,
+	                'advanced',
+	                'core'
+	                );
+       		}
+        } else {
+        	if ($options['posts']=='on') {
+	            add_meta_box(
+	                'fbc_sectionid',
+	                __( 'Facebook Comments', 'fbc_singlemeta' ),
+	                'fbc_metabox',
+	                $post_type,
+	                'advanced',
+	                'high'
+	                );
+        	}
+        }
+    }
+}
+add_action( 'add_meta_boxes', 'fbc_add_custom_box' );
+
+function fbc_save_postdata( $post_id ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
+        return;
+    }
+    if ( !isset( $_POST['fbc_noncename'] ) ) {
+        return;
+    }
+    if ( isset( $_POST['fbc_noncename'] ) && !wp_verify_nonce( $_POST['fbc_noncename'], plugin_basename( __FILE__ ) ) ){
+        return;
+    }
+    if ( 'page' == $_POST['post_type'] ){
+        if ( !current_user_can( 'edit_page', $post_id ) ){
+            return;
+        }
+    } else {
+
+        if ( !current_user_can( 'edit_post', $post_id ) ){
+            return;
+        }
+    }
+
+	$_disable_fbc_data = sanitize_text_field( $_POST['_disable_fbc'] );
+    add_post_meta($post_id, '_disable_fbc', $_disable_fbc_data, true) or
+    update_post_meta($post_id, '_disable_fbc', $_disable_fbc_data);
+
+}
+
+
+add_action( 'save_post', 'fbc_save_postdata' );
+
+function fbc_metabox( $post ) {
+  wp_nonce_field( plugin_basename( __FILE__ ), 'fbc_noncename' );
+  $_disable_fbc = get_post_meta( get_the_ID(), $key = '_disable_fbc', $single = true );
+?>
+    <input id="_disable_fbc" name="_disable_fbc" type="checkbox" value="on" <?php checked('on', $_disable_fbc); ?> /> <label for="_disable_fbc"><strong>DISABLE</strong> Facebook Comments</label></td>
 <?php
 }
 
