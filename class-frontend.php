@@ -94,8 +94,8 @@ function fbcommentbox($content) {
     		}
     	}
   	}
+  	}
 	return $content;
-}
 }
 add_filter ('the_content', 'fbcommentbox', 100);
 
