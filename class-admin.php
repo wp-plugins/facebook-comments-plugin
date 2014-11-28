@@ -418,6 +418,8 @@ $domain = str_replace('www.', '', $domain);
 function fbc_add_custom_box() {
     $post_types = get_post_types( '', 'names' );
     $options = get_option('fbcomments');
+    if (!isset($options['posts'])) {$options['posts'] = "";}
+	if (!isset($options['pages'])) {$options['pages'] = "";}
     foreach ( $post_types as $post_type ) {
         if ( "post" == $post_type ) {
         	if ($options['posts']=='on') {

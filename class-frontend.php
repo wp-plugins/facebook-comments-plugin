@@ -49,6 +49,7 @@ function fbcommentbox($content) {
 	if (!isset($options['pages'])) {$options['pages'] = "off";}
 	if (!isset($options['homepage'])) {$options['homepage'] = "off";}
 	if (!isset($options['count'])) {$options['count'] = "off";}
+	if (!isset($options['commentcount'])) {$options['commentcount'] = "";}
 	if (
 	   (is_single() && $options['posts'] == 'on') ||
        (is_page() && $options['pages'] == 'on') ||
@@ -61,6 +62,8 @@ function fbcommentbox($content) {
                 $post_meta[$field_key] = $value; // builds array
         }
     }
+    if (!isset($post_meta['_disable_fbc'])) {$post_meta['_disable_fbc'] = "off";}
+
 	if ($post_meta['_disable_fbc'] !='on') {
 		if ($options['count'] == 'on') {
 			if ($options['countstyle'] == '') {
@@ -78,6 +81,7 @@ function fbcommentbox($content) {
 			}
 			$commenttitle .= $options['title']."</h3>";
 		}
+		if (!isset($commentcount)) {$commentcount = "";}
 		$content .= "<!-- Facebook Comments Plugin for WordPress: http://peadig.com/wordpress-plugins/facebook-comments/ -->".$commenttitle.$commentcount;
 
       	if ($options['html5'] == 'on') {
@@ -109,6 +113,7 @@ function fbcommentshortcode($fbatts) {
         foreach ($fbatts as $key => $option)
             $fbcomments[$key] = $option;
 	}
+	if (!isset($fbcomments['count'])) {$fbcomments['count'] = "";}
 		if ($fbcomments['count'] == 'on') {
 			if ($fbcomments['countstyle'] == '') {
 				$commentcount = "<p>";
@@ -125,6 +130,7 @@ function fbcommentshortcode($fbatts) {
 			}
 			$commenttitle .= $fbcomments['title']."</h3>";
 		}
+		if (!isset($commentcount)) {$commentcount = "";}
 		$fbcommentbox = "<!-- Facebook Comments Plugin for WordPress: http://peadig.com/wordpress-plugins/facebook-comments/ -->".$commenttitle.$commentcount;
 
       	if ($fbcomments['html5'] == 'on') {
