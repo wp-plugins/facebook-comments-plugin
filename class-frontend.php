@@ -13,10 +13,13 @@ if (!isset($options['opengraph'])) {$options['opengraph'] = "";}
 
 //ADD OPEN GRAPH META
 function fbgraphinfo() {
-	$options = get_option('fbcomments'); ?>
-<meta property="fb:app_id" content="<?php echo $options['appID']; ?>"/>
-<meta property="fb:admins" content="<?php echo $options['mods']; ?>"/>
-<?php
+	$options = get_option('fbcomments');
+	if (!empty($options['appID'])) {
+		echo '<meta property="fb:app_id" content="'.$options['appID'].'"/>';
+	}
+	if (!empty($options['mods'])) {
+		echo '<meta property="fb:admins" content="'.$options['mods'].'"/>';
+	}
 }
 add_action('wp_head', 'fbgraphinfo');
 
