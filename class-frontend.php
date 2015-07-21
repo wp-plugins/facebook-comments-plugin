@@ -27,6 +27,7 @@ add_action('wp_head', 'fbgraphinfo');
 function fbmlsetup() {
 $options = get_option('fbcomments');
 if (!isset($options['fbml'])) {$options['fbml'] = "";}
+if (!isset($options['old_sdk'])) {$options['old_sdk'] = "off";}
 if ($options['fbml'] == 'on') {
 ?>
 <!-- Facebook Comments Plugin for WordPress: http://peadig.com/wordpress-plugins/facebook-comments/ -->

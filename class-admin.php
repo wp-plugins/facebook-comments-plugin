@@ -323,7 +323,7 @@ $domain = str_replace('www.', '', $domain);
 <li><strong>linklove</strong> - enter "1" to link to the plugin</li>
 </ul>
 <p>Here's an example of using the shortcode:<br><code>[fbcomments url="http://peadig.com/wordpress-plugins/facebook-comments/" width="375" count="off" num="3" countmsg="wonderful comments!"]</code></p>
-<p>You can also insert the shortcode directly into your theme with PHP:<br><code>&lt;?php echo do_shortcode('[fbcomments][fbcomments url="http://peadig.com/wordpress-plugins/facebook-comments/" width="375" count="off" num="3" countmsg="wonderful comments!"]'); ?&gt;</code>
+<p>You can also insert the shortcode directly into your theme with PHP:<br><code>&lt;?php echo do_shortcode('[fbcomments url="http://peadig.com/wordpress-plugins/facebook-comments/" width="375" count="off" num="3" countmsg="wonderful comments!"]'); ?&gt;</code>
 
 					</td>
 				</tr>
